@@ -3,6 +3,7 @@
 import { Suspense, useRef, useState } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { Environment, Sparkles, AdaptiveDpr, PerformanceMonitor } from '@react-three/drei';
+import { EffectComposer, Bloom, DepthOfField } from '@react-three/postprocessing';
 import { SoleMesh } from './SoleMesh';
 import { useIsMobile } from '@/hooks/useMediaQuery';
 import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion';
@@ -60,6 +61,15 @@ export function SandalScene() {
             color="#EDEFF3"
           />
           <Environment preset="city" />
+
+          {/* Cinematic gloss — skipped on mobile, where the extra composite
+              passes cost more than they're worth on constrained GPUs. */}
+          {!isMobile && (
+            <EffectComposer multisampling={0}>
+              <DepthOfField focusDistance={0.015} focalLength={0.035} bokehScale={3} />
+              <Bloom intensity={0.5} luminanceThreshold={0.35} luminanceSmoothing={0.2} mipmapBlur />
+            </EffectComposer>
+          )}
         </Suspense>
       </Canvas>
     </div>

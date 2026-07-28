@@ -18,7 +18,7 @@ export function FinalCTA() {
         <p className="font-mono text-xs uppercase tracking-label text-bronze">Limited first run</p>
         <AnimatedText
           as="h2"
-          text="Some things you plan. This one you meet."
+          text="Experience premium comfort."
           splitBy="word"
           className="mt-6 max-w-4xl font-display text-fluid-md leading-[0.95] text-sand"
         />
@@ -27,7 +27,7 @@ export function FinalCTA() {
           we will fit you when the bench opens.
         </p>
         <div className="mt-10 flex flex-wrap gap-4">
-          <MagneticButton href="#">Reserve a pair — $240</MagneticButton>
+          <MagneticButton href="#">Shop now — $240</MagneticButton>
           <MagneticButton href="#story" variant="ghost">Read the story</MagneticButton>
         </div>
       </div>

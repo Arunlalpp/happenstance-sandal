@@ -31,6 +31,8 @@ export const VIDEOS = {
   story: { src: '/videos/story.mp4', poster: '/images/story-poster.jpg' },
   showcase: { src: '/videos/showcase.mp4', poster: '/images/showcase-poster.jpg' },
   loved: { src: '/videos/loved.mp4', poster: '/images/loved-poster.jpg' },
+  packaging: { src: '/videos/packaging.mp4', poster: '/images/packaging-poster.jpg' },
+  scene: { src: '/videos/scene.mp4', poster: '/images/scene-poster.jpg' },
 } as const;
 
 /**
