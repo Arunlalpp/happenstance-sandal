@@ -1,6 +1,5 @@
 import { Hero } from '@/components/sections/Hero';
 import { StorySection } from '@/components/sections/StorySection';
-import { VideoShowcase } from '@/components/sections/VideoShowcase';
 import { ScrollStory } from '@/components/sections/ScrollStory';
 import { Features } from '@/components/sections/Features';
 import { Stats } from '@/components/sections/Stats';
@@ -11,19 +10,18 @@ import { FinalCTA } from '@/components/sections/FinalCTA';
 import { Footer } from '@/components/ui/Footer';
 
 export default function Home() {
-  return (
-    <>
-      <Hero />
-      <StorySection />
-      {/* <VideoShowcase /> */}
-      <ScrollStory />
-      <Features />
-      <Stats />
-      <Gallery />
-      <Loved />
-      <Packaging />
-      <FinalCTA />
-      <Footer />
-    </>
-  );
+    return (
+        <>
+            <Hero />
+            <StorySection />
+            <ScrollStory />
+            <Features />
+            <Stats />
+            <Gallery />
+            <Loved />
+            <Packaging />
+            <FinalCTA />
+            <Footer />
+        </>
+    );
 }
