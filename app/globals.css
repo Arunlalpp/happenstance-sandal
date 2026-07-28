@@ -1,0 +1,68 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+* {
+  -webkit-font-smoothing: antialiased;
+}
+
+html {
+  scroll-behavior: auto; /* Lenis handles smoothing; keep native off to avoid conflict */
+}
+
+body {
+  overscroll-behavior: none;
+}
+
+/* Hide the native cursor only where our custom cursor runs (fine pointer). */
+@media (hover: hover) and (pointer: fine) {
+  body[data-loaded='true'] * {
+    cursor: none;
+  }
+}
+
+/* Selection in-brand */
+::selection {
+  background: #AEC2D6;
+  color: #0A0C10;
+}
+
+/* Slim, on-brand scrollbar */
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: #0A0C10; }
+::-webkit-scrollbar-thumb { background: #1D2128; border-radius: 999px; }
+::-webkit-scrollbar-thumb:hover { background: #8890A0; }
+
+/* Visible keyboard focus (accessibility floor) */
+:focus-visible {
+  outline: 2px solid #AEC2D6;
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* Respect reduced motion globally as a backstop to the JS guards */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* A subtle film-grain layer for cinematic depth (pure CSS, GPU-cheap) */
+.grain::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  pointer-events: none;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
