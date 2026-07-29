@@ -3,9 +3,14 @@
 import { VideoSection } from '@/components/ui/VideoSection';
 import { AnimatedText } from '@/components/ui/AnimatedText';
 import { MagneticButton } from '@/components/ui/MagneticButton';
+import { useIsMobile } from '@/hooks/useMediaQuery';
 import { SITE, VIDEOS } from '@/lib/constants';
 
 export function FinalCTA() {
+    const isMobile = useIsMobile();
+    const videoSrc = isMobile ? VIDEOS.story.mobileSrc : VIDEOS.story.src;
+    const videoPoster = isMobile ? VIDEOS.story.mobilePoster : VIDEOS.story.poster;
+
     return (
         <section
             id="cta"
@@ -14,8 +19,8 @@ export function FinalCTA() {
             {/* ambient video wash behind the CTA */}
             <div className="absolute inset-0 opacity-40">
                 <VideoSection
-                    src={VIDEOS.story.src}
-                    poster={VIDEOS.story.poster}
+                    src={videoSrc}
+                    poster={videoPoster}
                     mode="autoplay"
                     rounded={false}
                     className="h-full w-full"

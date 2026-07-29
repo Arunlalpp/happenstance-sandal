@@ -28,7 +28,12 @@ export const NAV: NavItem[] = [
  */
 export const VIDEOS = {
     hero: { src: '/videos/hero.mp4', poster: '/images/hero-poster.jpg' },
-    story: { src: '/videos/story.mp4', poster: '/images/story-poster.jpg' },
+    story: {
+        src: '/videos/story.mp4',
+        poster: '/images/story-poster.jpg',
+        mobileSrc: '/videos/story-mobile.mp4',
+        mobilePoster: '/images/story-poster-mobile.jpg',
+    },
     loved: { src: '/videos/loved.mp4', poster: '/images/loved-poster.jpg' },
     packaging: {
         src: '/videos/packaging.mp4',
