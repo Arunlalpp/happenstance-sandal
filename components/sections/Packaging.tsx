@@ -87,21 +87,26 @@ export function Packaging() {
                 <div className="mt-20 grid gap-16 md:grid-cols-[0.9fr_1.1fr]">
                     {/* sticky left: the pair, turning — centered in the viewport while it sticks */}
                     <div className="md:sticky md:top-1/2 md:h-fit md:-translate-y-1/2">
-                        {/* aspect ratio matches each source's native framing: the mobile
-                            clip is shot portrait, the desktop one 16:9 — cropping either
-                            into the other's shape would crop down to mostly background. */}
-                        <div className="relative aspect-[3/4] overflow-hidden rounded-3xl bg-umber md:aspect-video">
-                            <VideoSection
-                                src={videoSrc}
-                                poster={videoPoster}
-                                mode="autoplay"
-                                rounded={false}
-                                className="h-full w-full"
-                            />
-                            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink/70 via-transparent to-transparent" />
-                            <span className="pointer-events-none absolute bottom-6 left-6 font-mono text-xs uppercase tracking-label text-sand/80">
-                                Every pair, boxed by hand
-                            </span>
+                        {/* aspect ratio matches each source's native framing exactly (mobile
+                            clip is a tight 9:16 shot, desktop is 16:9) so object-cover never
+                            has to crop further into an already-close-up frame. Mobile also
+                            gets a mat of padding around it — the source itself is shot so
+                            close that edge-to-edge felt cramped; the inset reads as "zoomed
+                            out" without altering the actual crop. */}
+                        <div className="relative aspect-[9/16] overflow-hidden rounded-3xl bg-umber p-3 md:aspect-video md:p-0">
+                            <div className="relative h-full w-full overflow-hidden rounded-2xl md:rounded-none">
+                                <VideoSection
+                                    src={videoSrc}
+                                    poster={videoPoster}
+                                    mode="autoplay"
+                                    rounded={false}
+                                    className="h-full w-full"
+                                />
+                                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink/70 via-transparent to-transparent" />
+                                <span className="pointer-events-none absolute bottom-6 left-6 font-mono text-xs uppercase tracking-label text-sand/80">
+                                    Every pair, boxed by hand
+                                </span>
+                            </div>
                         </div>
                     </div>
 
