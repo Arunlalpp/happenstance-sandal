@@ -31,7 +31,12 @@ export const VIDEOS = {
     story: { src: '/videos/story.mp4', poster: '/images/story-poster.jpg' },
     loved: { src: '/videos/loved.mp4', poster: '/images/loved-poster.jpg' },
     packaging: { src: '/videos/packaging.mp4', poster: '/images/packaging-poster.jpg' },
-    scene: { src: '/videos/scene3.mp4', poster: '/images/scene-poster.jpg' },
+    scene: {
+        src: '/videos/scene3.mp4',
+        poster: '/images/scene-poster.jpg',
+        mobileSrc: '/videos/scene3-mobile.mp4',
+        mobilePoster: '/images/scene-poster-mobile.jpg',
+    },
 } as const;
 
 /**

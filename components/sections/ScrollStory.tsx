@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef } from 'react';
 import { useScrollScrub } from '@/hooks/useScrollScrub';
 import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion';
+import { useIsMobile } from '@/hooks/useMediaQuery';
 import { AnimatedText } from '@/components/ui/AnimatedText';
 import { MagneticButton } from '@/components/ui/MagneticButton';
 import { clamp } from '@/utils/lerp';
@@ -49,6 +50,9 @@ export function ScrollStory() {
     const fillRef = useRef<HTMLSpanElement>(null);
     const tcRef = useRef<HTMLSpanElement>(null);
     const reduced = usePrefersReducedMotion();
+    const isMobile = useIsMobile();
+    const src = isMobile ? VIDEOS.scene.mobileSrc : VIDEOS.scene.src;
+    const poster = isMobile ? VIDEOS.scene.mobilePoster : VIDEOS.scene.poster;
 
     const onProgress = useCallback((p: number) => {
         const t = clamp(p) * (BEATS.length - 1);
@@ -74,28 +78,39 @@ export function ScrollStory() {
 
     useScrollScrub({ trigger: root, video: videoRef, enabled: !reduced, onProgress });
 
+    // Reload when the source flips between desktop/mobile (isMobile starts
+    // false on the server and updates after hydration). Deliberately not a
+    // `key`-based remount: useScrollScrub attaches to the <video> node once
+    // on mount, and a remount would swap the DOM node out from under it
+    // without the effect re-running to notice — leaving it driving a
+    // detached element while the visible video never seeks.
+    useEffect(() => {
+        videoRef.current?.load();
+    }, [src]);
+
     // Reduced motion: quiet autoplay loop instead of scroll-scrubbing.
+    // Depends on `src` too so it replays after the load() above swaps sources.
     useEffect(() => {
         const v = videoRef.current;
         if (!v || !reduced) return;
         v.loop = true;
         v.muted = true;
         v.play().catch(() => undefined);
-    }, [reduced]);
+    }, [reduced, src]);
 
     if (reduced) {
         return (
             <section id="scene" className="relative h-[100svh] w-full overflow-hidden bg-ink">
                 <video
                     ref={videoRef}
-                    poster={VIDEOS.scene.poster}
+                    poster={poster}
                     muted
                     playsInline
                     preload="auto"
                     disablePictureInPicture
                     className="absolute inset-0 h-full w-full object-cover"
                 >
-                    <source src={VIDEOS.scene.src} type="video/mp4" />
+                    <source src={src} type="video/mp4" />
                 </video>
                 <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink/70 via-transparent to-ink/20" />
                 <div className="pointer-events-none absolute inset-0 z-10 mx-auto flex max-w-[1600px] flex-col justify-center px-6 md:px-10">
@@ -120,14 +135,14 @@ export function ScrollStory() {
             <div className="sticky top-0 h-[100svh] w-full overflow-hidden">
                 <video
                     ref={videoRef}
-                    poster={VIDEOS.scene.poster}
+                    poster={poster}
                     muted
                     playsInline
                     preload="auto"
                     disablePictureInPicture
                     className="absolute inset-0 h-full w-full object-cover"
                 >
-                    <source src={VIDEOS.scene.src} type="video/mp4" />
+                    <source src={src} type="video/mp4" />
                 </video>
                 <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink/70 via-transparent to-ink/20" />
 
