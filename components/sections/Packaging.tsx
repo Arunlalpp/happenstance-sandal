@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { gsap } from '@/lib/gsap';
 import { useIsomorphicLayoutEffect } from '@/hooks/useIsomorphicLayoutEffect';
 import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion';
+import { useIsMobile } from '@/hooks/useMediaQuery';
 import { AnimatedText } from '@/components/ui/AnimatedText';
 import { VideoSection } from '@/components/ui/VideoSection';
 import { VIDEOS, PACKAGING_DETAILS } from '@/lib/constants';
@@ -19,6 +20,9 @@ export function Packaging() {
     const root = useRef<HTMLDivElement>(null);
     const reveal = useRef<HTMLDivElement>(null);
     const reduced = usePrefersReducedMotion();
+    const isMobile = useIsMobile();
+    const videoSrc = isMobile ? VIDEOS.packaging.mobileSrc : VIDEOS.packaging.src;
+    const videoPoster = isMobile ? VIDEOS.packaging.mobilePoster : VIDEOS.packaging.poster;
 
     useIsomorphicLayoutEffect(() => {
         const el = root.current;
@@ -83,14 +87,13 @@ export function Packaging() {
                 <div className="mt-20 grid gap-16 md:grid-cols-[0.9fr_1.1fr]">
                     {/* sticky left: the pair, turning — centered in the viewport while it sticks */}
                     <div className="md:sticky md:top-1/2 md:h-fit md:-translate-y-1/2">
-                        {/* aspect-video matches the source footage's native 16:9 framing —
-                            forcing it into a tall portrait card crops it down to mostly
-                            background, since the shot is a floating product against a lot
-                            of negative space. */}
-                        <div className="relative aspect-video overflow-hidden rounded-3xl bg-umber">
+                        {/* aspect ratio matches each source's native framing: the mobile
+                            clip is shot portrait, the desktop one 16:9 — cropping either
+                            into the other's shape would crop down to mostly background. */}
+                        <div className="relative aspect-[3/4] overflow-hidden rounded-3xl bg-umber md:aspect-video">
                             <VideoSection
-                                src={VIDEOS.packaging.src}
-                                poster={VIDEOS.packaging.poster}
+                                src={videoSrc}
+                                poster={videoPoster}
                                 mode="autoplay"
                                 rounded={false}
                                 className="h-full w-full"

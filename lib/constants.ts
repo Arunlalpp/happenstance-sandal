@@ -30,7 +30,12 @@ export const VIDEOS = {
     hero: { src: '/videos/hero.mp4', poster: '/images/hero-poster.jpg' },
     story: { src: '/videos/story.mp4', poster: '/images/story-poster.jpg' },
     loved: { src: '/videos/loved.mp4', poster: '/images/loved-poster.jpg' },
-    packaging: { src: '/videos/packaging.mp4', poster: '/images/packaging-poster.jpg' },
+    packaging: {
+        src: '/videos/packaging.mp4',
+        poster: '/images/packaging-poster.jpg',
+        mobileSrc: '/videos/packaging-mobile.mp4',
+        mobilePoster: '/images/packaging-poster-mobile.jpg',
+    },
     scene: {
         src: '/videos/scene3.mp4',
         poster: '/images/scene-poster.jpg',

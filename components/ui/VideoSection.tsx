@@ -73,6 +73,14 @@ export function VideoSection({
         return () => ctx.revert();
     }, [reduced]);
 
+    // Reload when `src` changes after mount (e.g. a consumer swapping
+    // between desktop/mobile sources via useIsMobile, which starts false on
+    // the server). A <source> child's src attribute changing doesn't make
+    // the browser pick it up on its own — it needs an explicit load().
+    useEffect(() => {
+        videoRef.current?.load();
+    }, [src]);
+
     // inview + autoplay playback control
     useEffect(() => {
         const video = videoRef.current;
@@ -99,7 +107,7 @@ export function VideoSection({
         );
         io.observe(video);
         return () => io.disconnect();
-    }, [mode]);
+    }, [mode, src]);
 
     // scrub mode: map scroll progress -> currentTime
     useIsomorphicLayoutEffect(() => {
@@ -125,7 +133,7 @@ export function VideoSection({
         else video.addEventListener('loadedmetadata', setup, { once: true });
 
         return () => st?.kill();
-    }, [mode, reduced, scrubLength]);
+    }, [mode, reduced, scrubLength, src]);
 
     const toggle = useCallback(() => {
         const v = videoRef.current;
